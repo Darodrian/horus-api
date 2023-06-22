@@ -113,48 +113,4 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "/webhooks")
-    public ResponseEntity<Object> handleIncomingMessages(@RequestBody Map<String, Object> requestBody) throws JsonProcessingException {
-        // convierte el objeto requestBody a JSON
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestBodyJson = objectMapper.writeValueAsString(requestBody);
-        System.out.println(requestBodyJson);
-
-
-        WhatsAppMessageRoot root = objectMapper.readValue(requestBodyJson, WhatsAppMessageRoot.class);
-
-        // obtiene el primer mensaje del objeto Root
-
-        if (root.getEntry() != null && !root.getEntry().isEmpty()) {
-            WhatsAppMessageEntry entry = root.getEntry().get(0);
-            if (entry.getChanges() != null && !entry.getChanges().isEmpty()) {
-                WhatsAppMessageChange change = entry.getChanges().get(0);
-                WhatsAppMessageValue value = change.getValue();
-                if (value != null && value.getMessages() != null && !value.getMessages().isEmpty()) {
-                    // Procesar los mensajes aquí
-                    ArrayList<WhatsAppMessageMessage> messages = value.getMessages();
-                    for (WhatsAppMessageMessage message : messages) {
-                        String from = message.getFrom();
-                        String id = message.getId();
-                        String timestamp = message.getTimestamp();
-                        String type = message.getType();
-                        String body =null;
-                        if (message.getText() != null) {
-                            body = message.getText().getBody();
-                        }
-                        System.out.println("From: " + from);
-                        System.out.println("ID: " + id);
-                        System.out.println("Timestamp: " + timestamp);
-                        System.out.println("Type: " + type);
-                        System.out.println("Body: " + body);
-                    }
-                }
-            }
-        }
-        return ResponseEntity.ok().build();
-    }
-
-
-
-
 }
