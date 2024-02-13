@@ -12,7 +12,7 @@ public class Conexion {
         Connection con = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            con = DriverManager.getConnection("jdbc:sqlserver://192.168.50.35:1433;databaseName=Permisos_de_Circulacion;encrypt=false;trustServerCertificate=true;", "sa", "somela2005");
+            con = DriverManager.getConnection("jdbc:sqlserver://192.168.50.35:1433;databaseName=Permisos_de_Circulacion_Horus;encrypt=false;trustServerCertificate=true;", "sa", "somela2005");
             if (con != null) {
                 return con;
             }
